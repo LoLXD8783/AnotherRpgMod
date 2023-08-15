@@ -500,7 +500,7 @@ namespace AnotherRpgMod.RPGModule.Entities
 			return damage;
 		}
 
-		public override void ModifyHitNPC(Item item, NPC target, ref int damage, ref float knockback, ref bool crit)
+		public override void ModifyHitNPCWithItem(Item item, NPC target, ref NPC.HitModifiers modifiers)/* tModPorter If you don't need the Item, consider using ModifyHitNPC instead */
 		{
 			modifyHitGeneral(item, target, ref damage, ref knockback, ref crit);
 		}
@@ -569,7 +569,7 @@ namespace AnotherRpgMod.RPGModule.Entities
 			MPPacketHandler.SendNpcUpdate(Mod, target);
 		}
 
-		public override void ModifyHitNPCWithProj(Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+		public override void ModifyHitNPCWithProj(Projectile proj, NPC target, ref NPC.HitModifiers modifiers)/* tModPorter If you don't need the Projectile, consider using ModifyHitNPC instead */
 		{
 			int pen = proj.penetrate;
 			if (pen == 0) pen++;
@@ -604,13 +604,13 @@ namespace AnotherRpgMod.RPGModule.Entities
 			base.GetHealLife(item, quickHeal, ref healValue);
 		}
 
-		public override void OnHitNPC(Item item, NPC target, int damage, float knockback, bool crit)
+		public override void OnHitNPCWithItem(Item item, NPC target, NPC.HitInfo hit, int damageDone)/* tModPorter If you don't need the Item, consider using OnHitNPC instead */
 		{
 			DemonEaterPerk(target,damage);
-			base.OnHitNPC(item, target, damage, knockback, crit);
+			base.OnHitNPCWithItem(item, target, damage, knockback, crit);
 		}
 
-		public override void OnHitNPCWithProj(Projectile proj, NPC target, int damage, float knockback, bool crit)
+		public override void OnHitNPCWithProj(Projectile proj, NPC target, NPC.HitInfo hit, int damageDone)/* tModPorter If you don't need the Projectile, consider using OnHitNPC instead */
 		{
 			DemonEaterPerk(target,damage);
 			base.OnHitNPCWithProj(proj, target, damage, knockback, crit);
@@ -681,19 +681,19 @@ namespace AnotherRpgMod.RPGModule.Entities
 			}
 		}
 
-		public override void ModifyHitByNPC(NPC npc, ref int damage, ref bool crit)
+		public override void ModifyHitByNPC(NPC npc, ref Player.HurtModifiers modifiers)
 		{
 
 			ModifyHitByGeneral(ref damage);
 			base.ModifyHitByNPC(npc, ref damage, ref crit);
 		}
-		public override void ModifyHitByProjectile(Projectile proj, ref int damage, ref bool crit)
+		public override void ModifyHitByProjectile(Projectile proj, ref Player.HurtModifiers modifiers)
 		{
 			ModifyHitByGeneral(ref damage);
 			base.ModifyHitByProjectile(proj, ref damage, ref crit);
 		}
 
-		public override void OnHitByNPC(NPC npc, int damage, bool crit)
+		public override void OnHitByNPC(NPC npc, Player.HurtInfo hurtInfo)
 		{
 			AddArmorXp(damage);
 			
@@ -709,7 +709,7 @@ namespace AnotherRpgMod.RPGModule.Entities
 			base.OnHitByNPC(npc, damage, crit);
 		}
 
-		public override void OnHitByProjectile(Projectile proj, int damage, bool crit)
+		public override void OnHitByProjectile(Projectile proj, Player.HurtInfo hurtInfo)
 		{
 			AddArmorXp(damage);
 
@@ -871,10 +871,10 @@ namespace AnotherRpgMod.RPGModule.Entities
 			base.SyncPlayer(toWho, fromWho, newPlayer);
 		}
 
-        public override void clientClone(ModPlayer clientClone)
+        public override void CopyClientState(ModPlayer clientClone)
         {
 
-            base.clientClone(clientClone);
+            base.CopyClientState(clientClone);
         }
 
         public override void SendClientChanges(ModPlayer clientPlayer)

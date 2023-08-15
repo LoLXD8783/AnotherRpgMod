@@ -67,7 +67,7 @@ namespace AnotherRpgMod.RPGModule.Entities
         }
 
         #region Buffers
-        public override void ModifyHitPlayer(NPC npc, Player target, ref int damage, ref bool crit)
+        public override void ModifyHitPlayer(NPC npc, Player target, ref Player.HurtModifiers modifiers)
         {
             if (HaveModifier(NPCModifier.Vampire))
             {
@@ -313,7 +313,7 @@ namespace AnotherRpgMod.RPGModule.Entities
         }
 
 
-        public override void OnHitByItem(NPC npc, Player Player, Item item, int damage, float knockback, bool crit)
+        public override void OnHitByItem(NPC npc, Player player, Item item, NPC.HitInfo hit, int damageDone)
         {
             
             if (HaveModifier(NPCModifier.Dancer))
@@ -329,7 +329,7 @@ namespace AnotherRpgMod.RPGModule.Entities
             //MPPacketHandler.SendNpcUpdate(Mod, npc);
         }
 
-        public override void OnHitByProjectile(NPC npc, Projectile projectile, int damage, float knockback, bool crit)
+        public override void OnHitByProjectile(NPC npc, Projectile projectile, NPC.HitInfo hit, int damageDone)
         {
             if (HaveModifier(NPCModifier.Dancer))
             {

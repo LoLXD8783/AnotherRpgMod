@@ -24,7 +24,7 @@ namespace AnotherRpgMod.RPGModule.Entities
         }
 
         
-        public override void ModifyHitPlayer(Projectile projectile, Player target, ref int damage, ref bool crit)
+        public override void ModifyHitPlayer(Projectile projectile, Player target, ref Player.HurtModifiers modifiers)
         {
             int projectilelevel = (int)((WorldManager.GetWorldLevelMultiplier(Config.NPCConfig.NPCProjectileDamageLevel)+ WorldManager.GetWorldAdditionalLevel()) * Config.NPCConfig.NpclevelMultiplier );
 
@@ -46,7 +46,7 @@ namespace AnotherRpgMod.RPGModule.Entities
         }
         
         
-        public override void ModifyHitNPC(Projectile projectile, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitNPC(Projectile projectile, NPC target, ref NPC.HitModifiers modifiers)
         {
             if (projectile.npcProj)
             {
